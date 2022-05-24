@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan&family=Poppins&display=swap');
+
+:root {
+  --font-title: "League Spartan", sans-serif;
+  --font-text: "Poppins", sans-serif;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-image: linear-gradient(90deg, #fdfbfb 0%, #ebedee 100%);
+  font-family: var(--font-text);
+}

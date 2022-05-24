@@ -4,6 +4,7 @@
   --color-green: #26b887;
   --color-white: #ffffff;
   --color-light-gray: #e9e9e9;
+  --color-dark-gray: #4a4a4a;
   --font-title: "League Spartan", sans-serif;
   --font-text: "Poppins", sans-serif;
   --box-shadow: 0 4px 8px rgba(0, 0, 0, .25);
@@ -27,7 +28,7 @@ body {
 .content {
   align-items: center;
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 60px);
   justify-content: center;
   margin: auto;
   width: 95%;
@@ -79,7 +80,50 @@ body {
   border-color: var(--color-white);
 }
 
-/* Auth */
+/* Navbar */
+
+.navbar {
+  align-items: center;
+  background-color: var(--color-green);
+  box-shadow: var(--box-shadow);
+  color: var(--color-white);
+  height: 60px;
+}
+
+.navbar__list {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  list-style: none;
+  margin: auto 0;
+  padding: 0 2rem;
+}
+
+.navbar__item {
+  align-items: center;
+  display: flex;
+  font-size: 1.25rem;
+}
+
+.navbar__text {
+  font-weight: bold;
+  margin: 0 1rem;
+}
+
+.navbar__text--name{
+  display: none;
+}
+
+.navbar__link {
+  cursor: pointer;
+}
+
+.navbar__link:hover {
+  color: var(--color-dark-gray);
+}
+
+/* Card */
 
 .card {
   box-shadow: var(--box-shadow);
@@ -129,6 +173,8 @@ body {
   line-height: 1.5;
 }
 
+/* Forms */
+
 .form {
   display: flex;
   flex-direction: column;
@@ -158,7 +204,15 @@ body {
   resize: vertical;
 }
 
+@media (min-width: 480px){
+  .navbar__text--name{
+    display: inline-block;
+  }
+}
+
 @media (min-width: 768px) {
+
+  /* Card */
   .card {
     flex-direction: row;
   }
@@ -170,4 +224,6 @@ body {
   .card__row {
     width: 50%;
   }
+
+  /* Navbar */
 }

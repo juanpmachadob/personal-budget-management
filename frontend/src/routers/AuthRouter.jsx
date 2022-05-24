@@ -3,15 +3,14 @@ import LoginScreen from "../components/auth/LoginScreen";
 import RegisterScreen from "../components/auth/RegisterScreen";
 
 const AuthRouter = () => {
+  console.log("ok")
   return (
-    <main className="content">
-      <Routes>
-        <Route path="/auth/register" element={<RegisterScreen />} />
-        <Route path="/auth/login" element={<LoginScreen />} />
+    <Routes>
+      <Route path="/login" element={<LoginScreen />} />
+      <Route path="/register" element={<RegisterScreen />} />
 
-        <Route path="*" element={<Navigate replace to="/auth/login" />} />
-      </Routes>
-    </main>
+      <Route path="/*" element={<Navigate replace to="/auth/login" />} />
+    </Routes>
   );
 };
 export default AuthRouter;

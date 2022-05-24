@@ -35,7 +35,7 @@ const RegisterScreen = () => {
   };
 
   return (
-    <section className="card">
+    <section className="card auth">
       <div className="card__row">
         <div className="card__body">
           <h1 className="card__title">Create account</h1>

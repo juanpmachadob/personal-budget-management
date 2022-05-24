@@ -24,7 +24,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <section className="card card--inverse">
+    <section className="card card--inverse auth">
       <div className="card__row">
         <div className="card__body">
           <h1 className="card__title">Login</h1>

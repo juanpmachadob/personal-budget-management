@@ -84,6 +84,11 @@ body {
   border-color: var(--color-white);
 }
 
+.btn-dark-gray {
+  background-color: var(--color-dark-gray);
+  border-color: var(--color-dark-gray);
+}
+
 /* Navbar */
 
 .navbar {
@@ -165,6 +170,21 @@ body {
 
 .form__input--inline {
   width: auto;
+}
+
+.form__buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.form__buttons .btn {
+  margin-bottom: 1rem;
+}
+
+.form__buttons .btn:last-child {
+  margin-bottom: 0;
 }
 
 /* Form decorators */
@@ -269,9 +289,9 @@ body {
 }
 
 .budget__title {
+  font-family: var(--font-title);
   font-size: 2rem;
   font-weight: bold;
-  font-family: var(--font-title);
 }
 
 .budget__title, .budget__controls .form__input:first-child {
@@ -283,8 +303,8 @@ body {
 }
 
 .budget__totals {
-  padding: 0 2rem 2rem 2rem;
   border-bottom: 1px solid var(--color-gray);
+  padding: 0 2rem 2rem 2rem;
 }
 
 .budget__total-card {
@@ -310,23 +330,31 @@ body {
 }
 
 .budget__total-card--general {
-  color: var(--color-blue);
   border-color: var(--color-blue);
+  color: var(--color-blue);
 }
 
 .budget__total-card--incomes {
-  color: var(--color-green);
   border-color: var(--color-green);
+  color: var(--color-green);
 }
 
 .budget__total-card--expenses {
-  color: var(--color-red);
   border-color: var(--color-red);
+  color: var(--color-red);
 }
 
 .budget__body {
-  padding: 0 2rem 2rem 2rem;
   overflow: auto;
+  padding: 0 2rem 2rem 2rem;
+}
+
+/* Budget form */
+
+.budget-form {
+  margin: 2rem 0;
+  max-width: 600px;
+  padding: 2rem;
 }
 
 /* Table */
@@ -368,6 +396,15 @@ body {
 }
 
 @media (min-width: 480px) {
+
+  /* General UI */
+  .form__buttons {
+    flex-direction: row;
+  }
+
+  .form__buttons .btn {
+    margin-bottom: 0;
+  }
 
   /* Navbar */
   .navbar__text--name {

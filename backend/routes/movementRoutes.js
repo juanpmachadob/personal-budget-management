@@ -16,6 +16,7 @@ const {
 const {
   categoryExists,
   movementExists,
+  isMovementOwner
 } = require("../helpers/databaseValidators");
 const validateJWT = require("../middlewares/validateJWT");
 const validateFields = require("../middlewares/validateFields");
@@ -56,8 +57,8 @@ router.post(
   createMovement
 );
 
-router.put("/:id", [], updateMovement);
+router.put("/:id", [movementExists], updateMovement);
 
-router.delete("/:id", [], deleteMovement);
+router.delete("/:id", [movementExists, isMovementOwner], deleteMovement);
 
 module.exports = router;

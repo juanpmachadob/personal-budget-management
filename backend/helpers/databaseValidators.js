@@ -43,8 +43,24 @@ const movementExists = async (req, res, next) => {
   next();
 };
 
+const isMovementOwner = async (req, res, next) => {
+  const { id: userId } = req;
+  const { id: movementId } = req.params;
+  const movement = await Movement.findByPk(movementId);
+
+  if (movement.userId.toString() !== userId.toString()) {
+    return res.status(401).json({
+      ok: false,
+      msg: "You are now allowed to delete this movement",
+    });
+  }
+
+  next();
+};
+
 module.exports = {
   emailExists,
   categoryExists,
   movementExists,
+  isMovementOwner,
 };

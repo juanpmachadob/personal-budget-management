@@ -8,6 +8,7 @@ const { check } = require("express-validator");
 const {
   createMovement,
   getMovementsByCurrentUser,
+  getTotals,
 } = require("../controllers/movementController");
 const { categoryExists } = require("../helpers/databaseValidators");
 const validateJWT = require("../middlewares/validateJWT");
@@ -19,6 +20,8 @@ const router = Router();
 router.use(validateJWT);
 
 router.get("/", getMovementsByCurrentUser);
+
+router.get("/totals", getTotals);
 
 router.post(
   "/",

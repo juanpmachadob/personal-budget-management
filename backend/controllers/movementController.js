@@ -10,11 +10,34 @@ const getMovementsByCurrentUser = async (req, res) => {
       where: { userId },
       offset: (page - 1) * limit,
       limit,
+      order: [["date", "DESC"]],
       include: ["category"],
     });
 
     return res.json({
       movement,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      msg: "Please, contact the administrator",
+    });
+  }
+};
+
+const getTotals = async (req, res) => {
+  const { id: userId } = req;
+
+  try {
+    // Get the sum of the incomes and expenses of the current user.
+    const [incomes, expenses] = await Promise.all([
+      Movement.sum("amount", { where: { userId, type: "income" } }),
+      Movement.sum("amount", { where: { userId, type: "expense" } }),
+    ]);
+
+    return res.json({
+      totals: { general: incomes - expenses, incomes, expenses },
     });
   } catch (error) {
     console.log(error);
@@ -55,5 +78,6 @@ const createMovement = async (req, res) => {
 
 module.exports = {
   getMovementsByCurrentUser,
+  getTotals,
   createMovement,
 };

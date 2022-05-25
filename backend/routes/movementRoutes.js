@@ -5,7 +5,10 @@
 
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { createMovement } = require("../controllers/movementController");
+const {
+  createMovement,
+  getMovementsByCurrentUser,
+} = require("../controllers/movementController");
 const { categoryExists } = require("../helpers/databaseValidators");
 const validateJWT = require("../middlewares/validateJWT");
 const validateFields = require("../middlewares/validateFields");
@@ -14,6 +17,8 @@ const Movement = require("../models/Movement");
 const router = Router();
 
 router.use(validateJWT);
+
+router.get("/", getMovementsByCurrentUser);
 
 router.post(
   "/",
@@ -35,7 +40,7 @@ router.post(
     ),
     check("categoryId", "Category is required").not().isEmpty(),
     validateFields,
-    categoryExists
+    categoryExists,
   ],
   createMovement
 );

@@ -6,11 +6,17 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 const {
-  createMovement,
   getMovementsByCurrentUser,
-  getTotals,
+  getTotalsByCurrentUser,
+  getMovementById,
+  createMovement,
+  updateMovement,
+  deleteMovement,
 } = require("../controllers/movementController");
-const { categoryExists } = require("../helpers/databaseValidators");
+const {
+  categoryExists,
+  movementExists,
+} = require("../helpers/databaseValidators");
 const validateJWT = require("../middlewares/validateJWT");
 const validateFields = require("../middlewares/validateFields");
 const Movement = require("../models/Movement");
@@ -21,7 +27,9 @@ router.use(validateJWT);
 
 router.get("/", getMovementsByCurrentUser);
 
-router.get("/totals", getTotals);
+router.get("/totals", getTotalsByCurrentUser);
+
+router.get("/:id", [movementExists], getMovementById);
 
 router.post(
   "/",
@@ -47,5 +55,9 @@ router.post(
   ],
   createMovement
 );
+
+router.put("/:id", [], updateMovement);
+
+router.delete("/:id", [], deleteMovement);
 
 module.exports = router;

@@ -15,6 +15,7 @@ const getMovementsByCurrentUser = async (req, res) => {
     });
 
     return res.json({
+      ok: true,
       movement,
     });
   } catch (error) {
@@ -26,7 +27,7 @@ const getMovementsByCurrentUser = async (req, res) => {
   }
 };
 
-const getTotals = async (req, res) => {
+const getTotalsByCurrentUser = async (req, res) => {
   const { id: userId } = req;
 
   try {
@@ -37,7 +38,25 @@ const getTotals = async (req, res) => {
     ]);
 
     return res.json({
+      ok: true,
       totals: { general: incomes - expenses, incomes, expenses },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      msg: "Please, contact the administrator",
+    });
+  }
+};
+
+const getMovementById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const movement = await Movement.findByPk(id, { include: ["category"] });
+    return res.json({
+      ok: true,
+      movement,
     });
   } catch (error) {
     console.log(error);
@@ -76,8 +95,15 @@ const createMovement = async (req, res) => {
   }
 };
 
+const updateMovement = async (req, res) => {};
+
+const deleteMovement = async (req, res) => {};
+
 module.exports = {
   getMovementsByCurrentUser,
-  getTotals,
+  getTotalsByCurrentUser,
+  getMovementById,
   createMovement,
+  updateMovement,
+  deleteMovement,
 };

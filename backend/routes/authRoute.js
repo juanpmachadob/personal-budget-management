@@ -1,7 +1,12 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { register } = require("../controllers/authController");
+const {
+  register,
+  login,
+  renewToken,
+} = require("../controllers/authController");
 const { emailExists } = require("../helpers/databaseValidators");
+const validateJWT = require("../middlewares/validateJWT");
 const validateFields = require("../middlewares/validateFields");
 
 const router = Router();
@@ -29,5 +34,17 @@ router.post(
   ],
   register
 );
+
+router.post(
+  "/login",
+  [
+    check("email", "Invalid email").isEmail(),
+    check("password", "Password is required.").not().isEmpty(),
+    validateFields,
+  ],
+  login
+);
+
+router.get("/renew", validateJWT, renewToken);
 
 module.exports = router;

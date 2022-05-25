@@ -11,7 +11,7 @@ class Server {
 
     this.paths = {
       auth: "/api/auth",
-      Movement: "/api/Movement",
+      movements: "/api/movements",
       search: "/api/search",
     };
 
@@ -39,7 +39,8 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.paths.auth, require("../routes/authRoute"));
+    this.app.use(this.paths.auth, require("../routes/authRoutes"));
+    this.app.use(this.paths.movements, require("../routes/movementRoutes"));
     this.app.get("/*", (req, res) => {
       res.sendFile(path.join(__dirname + "/public/index.html"));
     });

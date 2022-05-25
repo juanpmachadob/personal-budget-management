@@ -97,7 +97,40 @@ const createMovement = async (req, res) => {
   }
 };
 
-const updateMovement = async (req, res) => {};
+const updateMovement = async (req, res) => {
+  const { id: userId } = req;
+  const { id: movementId } = req.params;
+  const { concept, amount, date, categoryId } = req.body;
+
+  try {
+    let movement = {
+      concept,
+      amount,
+      date,
+      categoryId,
+    };
+
+    // Update movement and get changes
+    movement = await Movement.update(movement, {
+      where: {
+        id: movementId,
+        userId,
+      },
+    });
+    movement = await Movement.findByPk(movementId);
+
+    return res.json({
+      movement,
+      ok: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      msg: "Please, contact the administrator",
+    });
+  }
+};
 
 const deleteMovement = async (req, res) => {
   const { id: userId } = req;

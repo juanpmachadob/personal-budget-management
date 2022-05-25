@@ -16,7 +16,7 @@ const {
 const {
   categoryExists,
   movementExists,
-  isMovementOwner
+  isMovementOwner,
 } = require("../helpers/databaseValidators");
 const validateJWT = require("../middlewares/validateJWT");
 const validateFields = require("../middlewares/validateFields");
@@ -36,7 +36,8 @@ router.post(
   "/",
   [
     check("concept", "Concept is required").not().isEmpty(),
-    check("concept", "Concept length must be max 32 characters").isLength({
+    check("concept", "Concept length must be between 2-32 characters").isLength({
+      min: 2,
       max: 32,
     }),
     check("amount", "Amount is required").not().isEmpty(),
@@ -57,7 +58,29 @@ router.post(
   createMovement
 );
 
-router.put("/:id", [movementExists], updateMovement);
+router.put(
+  "/:id",
+  [
+    check("concept", "Concept is required").not().isEmpty(),
+    check("concept", "Concept length must be between 2-32 characters").isLength({
+      min: 2,
+      max: 32,
+    }),
+    check("amount", "Amount is required").not().isEmpty(),
+    check("amount", "Amount must be between 1 to 100000000").isFloat({
+      min: 1,
+      max: 100000000,
+    }),
+    check("date", "date is required").not().isEmpty(),
+    check("date", "Invalid date").isDate(),
+    check("categoryId", "Category is required").not().isEmpty(),
+    validateFields,
+    movementExists,
+    categoryExists,
+    isMovementOwner,
+  ],
+  updateMovement
+);
 
 router.delete("/:id", [movementExists, isMovementOwner], deleteMovement);
 

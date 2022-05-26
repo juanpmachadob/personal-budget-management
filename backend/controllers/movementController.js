@@ -8,8 +8,8 @@ const getMovementsByCurrentUser = async (req, res) => {
     // Paginate user movements
     const movement = await Movement.findAll({
       where: { userId },
-      offset: (page - 1) * limit,
-      limit,
+      offset: (page - 1) * Number(limit),
+      limit: Number(limit),
       order: [["date", "DESC"]],
       include: ["category"],
     });

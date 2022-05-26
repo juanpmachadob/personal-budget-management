@@ -23,9 +23,7 @@ class Server {
 
   connectDB() {
     db.authenticate()
-      .then(() =>
-        console.log("MySQL DB connection established successfully!")
-      )
+      .then(() => console.log("MySQL DB connection established successfully!"))
       .catch((error) => {
         throw new Error(error);
       });
@@ -43,6 +41,7 @@ class Server {
     this.app.use(this.paths.auth, require("../routes/authRoutes"));
     this.app.use(this.paths.movements, require("../routes/movementRoutes"));
     this.app.use(this.paths.categories, require("../routes/categoryRoutes"));
+    this.app.use(this.paths.search, require("../routes/searchRoutes"));
     this.app.get("/*", (req, res) => {
       res.sendFile(path.join(__dirname + "/public/index.html"));
     });

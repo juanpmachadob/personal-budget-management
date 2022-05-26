@@ -3,9 +3,12 @@ import { useDispatch } from "react-redux";
 import validator from "validator";
 import useForm from "../../hooks/useForm";
 import { startLogin } from "../../store/auth/authThunks";
+import { useState } from "react";
+import Alert from "../ui/Alert";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
+  const [error, setError] = useState();
   const [formValues, handleInputChange] = useForm({
     email: "juan@test.com",
     password: "Aabc123.Aabc123.Aabc123.Aabc123.",
@@ -14,17 +17,20 @@ const LoginScreen = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (isFormValid()){
+    if (isFormValid()) {
       dispatch(startLogin(email, password));
     }
   };
 
   const isFormValid = () => {
     if (!validator.isEmail(email)) {
+      setError("Invalid email");
       return false;
     } else if (password.trim().length === 0) {
+      setError("Password is required");
       return false;
     }
+    setError();
     return true;
   };
 
@@ -34,6 +40,7 @@ const LoginScreen = () => {
         <div className="card__body">
           <h1 className="card__title">Login</h1>
           <form className="form" onSubmit={handleLogin}>
+            {error && <Alert description={error} />}
             <div className="form__field">
               <label htmlFor="email" className="form__label">
                 Email

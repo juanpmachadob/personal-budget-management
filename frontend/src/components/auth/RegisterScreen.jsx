@@ -1,36 +1,56 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import validator from "validator";
 import useForm from "../../hooks/useForm";
+import { startRegister } from "../../store/auth/authThunks";
+import Alert from "../ui/Alert";
 
 const RegisterScreen = () => {
+  const dispatch = useDispatch();
+  const [error, setError] = useState();
+
   const [formValues, handleInputChange] = useForm({
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
+    name: "Juan",
+    email: "juan@test.com",
+    password: "Aabc123.Aabc123.Aabc123.Aabc123.",
+    password2: "Aabc123.Aabc123.Aabc123.Aabc123.",
   });
   const { name, email, password, password2 } = formValues;
 
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    console.log(isFormValid());
+    if (isFormValid()) {
+      dispatch(startRegister(name, email, password));
+    }
   };
 
   const isFormValid = () => {
     if (name.trim().length === 0) {
+      setError("Name is required");
       return false;
     } else if (name.trim().length < 2 || name.trim().length > 32) {
+      setError("Name length must be between 2-32 characters");
       return false;
     } else if (!validator.isEmail(email)) {
+      setError("Invalid email");
+      return false;
+    } else if (email.length > 256) {
+      setError("Email length must be max 256 characters");
       return false;
     } else if (
       !validator.isStrongPassword(password.toString()) ||
       password.length > 32
     ) {
+      setError(
+        "Password should be between 8-32 characters and should include 1 number, 1 symbol, 1 lowercase and 1 uppercase"
+      );
       return false;
     } else if (password !== password2) {
+      setError("Passwords should match");
       return false;
     }
+    setError();
     return true;
   };
 
@@ -39,7 +59,8 @@ const RegisterScreen = () => {
       <div className="card__row">
         <div className="card__body">
           <h1 className="card__title">Create account</h1>
-          <form className="form" onSubmit={handleLogin}>
+          <form className="form" onSubmit={handleRegister}>
+            {error && <Alert description={error} />}
             <div className="form__field">
               <label htmlFor="name" className="form__label">
                 Name

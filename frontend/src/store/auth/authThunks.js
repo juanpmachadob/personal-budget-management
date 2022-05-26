@@ -14,14 +14,44 @@ export const startLogin = (email, password) => {
 
           dispatch(login(user));
         } else {
-          //TODO: render errors
-          if (data.errors) console.log(data.errors);
-          if (data.msg) Swal.fire("Error", "test", "error");
+          const msg = data.msg
+            ? data.msg
+            : data.errors
+            ? data.errors[Object.keys(data.errors)[0]].msg
+            : "Please, reload and try again.";
+          Swal.fire("Error", msg, "error");
         }
       })
       .catch((err) => {
         console.log(err);
-        Swal.fire("Error", "Please, contact the administrator", "error");
+        Swal.fire("Error", "Please, contact the administrador", "error");
+      });
+  };
+};
+
+export const startRegister = (name, email, password) => {
+  return async (dispatch) => {
+    fetchWithoutToken("auth/register", { name, email, password }, "POST")
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.ok) {
+          const { user, token } = data;
+
+          localStorage.setItem("token", token);
+
+          dispatch(login(user));
+        } else {
+          const msg = data.msg
+            ? data.msg
+            : data.errors
+            ? data.errors[Object.keys(data.errors)[0]].msg
+            : "Please, reload and try again.";
+          Swal.fire("Error", msg, "error");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire("Error", "Please, contact the administrador", "error");
       });
   };
 };

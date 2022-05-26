@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import validator from "validator";
 import useForm from "../../hooks/useForm";
+import { startLogin } from "../../store/auth/authThunks";
 
 const LoginScreen = () => {
+  const dispatch = useDispatch();
   const [formValues, handleInputChange] = useForm({
     email: "juan@test.com",
     password: "Aabc123.Aabc123.Aabc123.Aabc123.",
@@ -11,7 +14,9 @@ const LoginScreen = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(isFormValid());
+    if (isFormValid()){
+      dispatch(startLogin(email, password));
+    }
   };
 
   const isFormValid = () => {

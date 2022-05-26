@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
-import AuthRouter from "./AuthRouter";
-import BudgetRouter from "./BudgetRouter";
+import AuthRoutes from "./AuthRoutes";
+import BudgetRoutes from "./BudgetRoutes";
 
 const AppRouter = () => {
   return (
@@ -11,16 +11,16 @@ const AppRouter = () => {
         <Route
           path="/auth/*"
           element={
-            <PublicRoute isAuth={true}>
-              <AuthRouter />
+            <PublicRoute isAuth={false}>
+              <AuthRoutes />
             </PublicRoute>
           }
         />
         <Route
           path="/*"
           element={
-            <PrivateRoute isAuth={true}>
-              <BudgetRouter />
+            <PrivateRoute isAuth={false}>
+              <BudgetRoutes />
             </PrivateRoute>
           }
         />

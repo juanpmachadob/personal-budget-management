@@ -1,7 +1,7 @@
 import BiEditAlt from "../ui/BiEditAlt";
 import BiTrashAlt from "../ui/BiTrashAlt";
 
-const BudgetItem = () => {
+const MovementsItem = () => {
   const handleEdit = () => {};
 
   const handleDelete = () => {};
@@ -25,4 +25,4 @@ const BudgetItem = () => {
     </tr>
   );
 };
-export default BudgetItem;
+export default MovementsItem;

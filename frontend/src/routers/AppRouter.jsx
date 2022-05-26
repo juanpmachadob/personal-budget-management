@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import AuthRoutes from "./AuthRoutes";
-import BudgetRoutes from "./BudgetRoutes";
+import MovementsRoutes from "./MovementsRoutes";
 
 const AppRouter = () => {
   return (
@@ -11,7 +11,7 @@ const AppRouter = () => {
         <Route
           path="/auth/*"
           element={
-            <PublicRoute isAuth={false}>
+            <PublicRoute isAuth={true}>
               <AuthRoutes />
             </PublicRoute>
           }
@@ -19,8 +19,8 @@ const AppRouter = () => {
         <Route
           path="/*"
           element={
-            <PrivateRoute isAuth={false}>
-              <BudgetRoutes />
+            <PrivateRoute isAuth={true}>
+              <MovementsRoutes />
             </PrivateRoute>
           }
         />

@@ -5,7 +5,7 @@ import useForm from "../../hooks/useForm";
 const TYPES = ["incomes", "expenses"];
 const CATEGORIES = ["Food", "Other"];
 
-const BudgetFormScreen = () => {
+const MovementsFormScreen = () => {
   const [formValues, handleInputChange] = useForm({
     concept: "",
     amount: "",
@@ -40,7 +40,7 @@ const BudgetFormScreen = () => {
   };
 
   return (
-    <section className="card budget-form">
+    <section className="card movements-form">
       <div className="card__body">
         <h1 className="card__title">
           New {TYPES.includes(type) ? type : "movement"}
@@ -132,7 +132,7 @@ const BudgetFormScreen = () => {
             </select>
           </div>
           <div className="form__buttons">
-            <Link className="btn btn-dark-gray" to={"/budget"}>
+            <Link className="btn btn-dark-gray" to={"/movements"}>
               Back
             </Link>
             <button className="btn btn-green" type="submit">
@@ -144,4 +144,4 @@ const BudgetFormScreen = () => {
     </section>
   );
 };
-export default BudgetFormScreen;
+export default MovementsFormScreen;

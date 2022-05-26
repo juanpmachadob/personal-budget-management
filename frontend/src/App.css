@@ -268,9 +268,9 @@ body {
   min-height: 400px;
 }
 
-/* Budget */
+/* Movements */
 
-.budget {
+.movements {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -278,36 +278,36 @@ body {
   overflow: auto;
 }
 
-.budget__header, .budget__totals, .budget__controls {
+.movements__header, .movements__totals, .movements__controls {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.budget__header {
+.movements__header {
   padding: 2rem;
 }
 
-.budget__title {
+.movements__title {
   font-family: var(--font-title);
   font-size: 2rem;
   font-weight: bold;
 }
 
-.budget__title, .budget__controls .form__input:first-child {
+.movements__title, .movements__controls .form__input:first-child {
   margin-bottom: 1rem;
 }
 
-.budget__controls {
+.movements__controls {
   padding: 1rem 2rem 0 2rem;
 }
 
-.budget__totals {
+.movements__totals {
   border-bottom: 1px solid var(--color-gray);
   padding: 0 2rem 2rem 2rem;
 }
 
-.budget__total-card {
+.movements__total-card {
   align-items: center;
   border: 2px solid;
   display: flex;
@@ -318,40 +318,40 @@ body {
   padding: 1rem;
 }
 
-.budget__total-card:last-of-type {
+.movements__total-card:last-of-type {
   margin-bottom: 0;
 }
 
-.budget__total-amount {
+.movements__total-amount {
   font-family: var(--font-title);
   font-size: 1.5rem;
   font-weight: bold;
   margin-top: .25rem;
 }
 
-.budget__total-card--general {
+.movements__total-card--general {
   border-color: var(--color-blue);
   color: var(--color-blue);
 }
 
-.budget__total-card--incomes {
+.movements__total-card--incomes {
   border-color: var(--color-green);
   color: var(--color-green);
 }
 
-.budget__total-card--expenses {
+.movements__total-card--expenses {
   border-color: var(--color-red);
   color: var(--color-red);
 }
 
-.budget__body {
+.movements__body {
   overflow: auto;
   padding: 0 2rem 2rem 2rem;
 }
 
-/* Budget form */
+/* Movements form */
 
-.budget-form {
+.movements-form {
   margin: 2rem 0;
   max-width: 600px;
   padding: 2rem;
@@ -447,18 +447,18 @@ body {
     display: inline-block;
   }
 
-  /* Budget */
+  /* Movements */
 
-  .budget__header, .budget__totals, .budget__controls {
+  .movements__header, .movements__totals, .movements__controls {
     align-items: center;
     flex-direction: row;
   }
 
-  .budget__title {
+  .movements__title {
     text-align: center;
   }
 
-  .budget__title, .budget__controls .form__input:first-child, .budget__total-card {
+  .movements__title, .movements__controls .form__input:first-child, .movements__total-card {
     margin-bottom: 0rem;
   }
 }
@@ -478,8 +478,8 @@ body {
     width: 50%;
   }
 
-  /* Budget */
-  .budget {
+  /* Movements */
+  .movements {
     flex-direction: column;
   }
 }

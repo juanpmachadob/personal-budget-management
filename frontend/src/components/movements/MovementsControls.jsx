@@ -1,6 +1,6 @@
-const BudgetControls = () => {
+const MovementsControls = () => {
   return (
-    <div className="budget__controls">
+    <div className="movements__controls">
       <input
         className="form__input form__input--inline form__search"
         type="search"
@@ -24,4 +24,4 @@ const BudgetControls = () => {
     </div>
   );
 };
-export default BudgetControls;
+export default MovementsControls;

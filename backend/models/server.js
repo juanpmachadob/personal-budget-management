@@ -30,6 +30,7 @@ class Server {
   }
 
   middlewares() {
+    //TODO: configure cors
     this.app.use(cors());
 
     this.app.use(express.json());

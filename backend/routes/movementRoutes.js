@@ -7,6 +7,7 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 const {
   getMovementsByCurrentUser,
+  getMovementsByType,
   getTotalsByCurrentUser,
   getMovementById,
   createMovement,
@@ -30,6 +31,10 @@ router.get("/", getMovementsByCurrentUser);
 
 router.get("/totals", getTotalsByCurrentUser);
 
+router.get("/incomes", getMovementsByType("incomes"));
+
+router.get("/expenses", getMovementsByType("expenses"));
+
 router.get("/:id", [movementExists], getMovementById);
 
 router.post(
@@ -48,7 +53,7 @@ router.post(
     check("date", "date is required").not().isEmpty(),
     check("date", "Invalid date").isDate(),
     check("type", "type is required").not().isEmpty(),
-    check("type", "Type must be income or expense").isIn(
+    check("type", "Type must be incomes or expenses").isIn(
       Movement.getAttributes().type.values
     ),
     check("categoryId", "Category is required").not().isEmpty(),

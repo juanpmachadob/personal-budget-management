@@ -6,7 +6,7 @@ const getMovementsByCurrentUser = async (req, res) => {
 
   try {
     // Paginate user movements
-    const movement = await Movement.findAll({
+    const movements = await Movement.findAll({
       where: { userId },
       offset: (page - 1) * Number(limit),
       limit: Number(limit),
@@ -16,7 +16,7 @@ const getMovementsByCurrentUser = async (req, res) => {
 
     return res.json({
       ok: true,
-      movement,
+      movements,
     });
   } catch (error) {
     console.log(error);
@@ -27,14 +27,43 @@ const getMovementsByCurrentUser = async (req, res) => {
   }
 };
 
+const getMovementsByType = (type) => {
+  return async (req, res) => {
+    const { id: userId } = req;
+    const { page = 1, limit = 10 } = req.query;
+
+    try {
+      // Paginate user movements
+      const movements = await Movement.findAll({
+        where: { userId, type },
+        offset: (page - 1) * Number(limit),
+        limit: Number(limit),
+        order: [["date", "DESC"]],
+        include: ["category"],
+      });
+
+      return res.json({
+        ok: true,
+        movements,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        ok: false,
+        msg: "Please, contact the administrator",
+      });
+    }
+  };
+};
+
 const getTotalsByCurrentUser = async (req, res) => {
   const { id: userId } = req;
 
   try {
     // Get the sum of the incomes and expenses of the current user.
     const [incomes, expenses] = await Promise.all([
-      Movement.sum("amount", { where: { userId, type: "income" } }),
-      Movement.sum("amount", { where: { userId, type: "expense" } }),
+      Movement.sum("amount", { where: { userId, type: "incomes" } }),
+      Movement.sum("amount", { where: { userId, type: "expenses" } }),
     ]);
 
     return res.json({
@@ -160,6 +189,7 @@ module.exports = {
   getMovementsByCurrentUser,
   getTotalsByCurrentUser,
   getMovementById,
+  getMovementsByType,
   createMovement,
   updateMovement,
   deleteMovement,

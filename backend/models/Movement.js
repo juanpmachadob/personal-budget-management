@@ -14,7 +14,7 @@ const Movement = db.define("Movement", {
     type: DataTypes.DATEONLY,
   },
   type: {
-    type: DataTypes.ENUM("income", "expense"),
+    type: DataTypes.ENUM("incomes", "expenses"),
   },
   categoryId: {
     type: DataTypes.INTEGER,

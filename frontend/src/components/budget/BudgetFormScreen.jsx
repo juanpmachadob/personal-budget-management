@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import validator from "validator";
 import useForm from "../../hooks/useForm";
 
-const TYPES = ["Income", "Expense"];
+const TYPES = ["incomes", "expenses"];
 const CATEGORIES = ["Food", "Other"];
 
 const BudgetFormScreen = () => {
@@ -25,7 +25,7 @@ const BudgetFormScreen = () => {
       return false;
     } else if (concept.trim().length === 0) {
       return false;
-    } else if (concept.trim().length > 32) {
+    } else if (concept.trim().length < 2 || concept.trim().length > 32) {
       return false;
     } else if (!validator.isNumeric(amount)) {
       return false;
@@ -43,7 +43,7 @@ const BudgetFormScreen = () => {
     <section className="card budget-form">
       <div className="card__body">
         <h1 className="card__title">
-          New {TYPES.includes(type) ? type.toLowerCase() : "entry"}
+          New {TYPES.includes(type) ? type : "movement"}
         </h1>
         <form className="form" onSubmit={handleSubmit}>
           <div className="form__field">
@@ -58,7 +58,7 @@ const BudgetFormScreen = () => {
               onChange={handleInputChange}
             >
               <option value="" disabled>
-                Select entry type
+                Select movement type
               </option>
               {TYPES.map((t, index) => {
                 return (

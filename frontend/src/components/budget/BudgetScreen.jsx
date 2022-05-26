@@ -10,7 +10,7 @@ const BudgetScreen = () => {
         <div className="budget__header">
           <span className="budget__title">Movements</span>
           <Link className="btn btn-green" to={"/budget/create"}>
-            New entry
+            New movement
           </Link>
         </div>
         <BudgetTotals />

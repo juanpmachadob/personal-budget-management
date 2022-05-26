@@ -19,7 +19,7 @@ const RegisterScreen = () => {
   const isFormValid = () => {
     if (name.trim().length === 0) {
       return false;
-    } else if (name.trim().length > 32) {
+    } else if (name.trim().length < 2 || name.trim().length > 32) {
       return false;
     } else if (!validator.isEmail(email)) {
       return false;

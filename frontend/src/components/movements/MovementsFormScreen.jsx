@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import validator from "validator";
 import useForm from "../../hooks/useForm";
 import { startGetCategories } from "../../store/categories/categoryThunks";
+import { startCreateMovement } from "../../store/movements/movementThunks";
 import Alert from "../ui/Alert";
 
 const TYPES = ["incomes", "expenses"];
@@ -12,13 +13,13 @@ const MovementsFormScreen = () => {
   const [error, setError] = useState();
   const dispatch = useDispatch();
   const [formValues, handleInputChange] = useForm({
-    concept: "incomes",
-    amount: "0",
+    concept: "",
+    amount: "",
     date: "",
-    category: "",
-    type: "incomes",
+    categoryId: "",
+    type: "",
   });
-  const { concept, amount, date, category, type } = formValues;
+  const { concept, amount, date, categoryId, type } = formValues;
 
   const { categories } = useSelector((state) => state.category);
 
@@ -32,7 +33,9 @@ const MovementsFormScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(isFormValid());
+    if (isFormValid()) {
+      dispatch(startCreateMovement(formValues));
+    }
   };
 
   const isFormValid = () => {
@@ -54,7 +57,7 @@ const MovementsFormScreen = () => {
     } else if (!validator.isDate(date)) {
       setError("Date must be a valid date");
       return false;
-    } else if (!categories.some((c) => c.id === +category)) {
+    } else if (!categories.some((c) => c.id === +categoryId)) {
       setError("Invalid category");
       return false;
     }
@@ -131,14 +134,14 @@ const MovementsFormScreen = () => {
             />
           </div>
           <div className="form__field">
-            <label htmlFor="category" className="form__label">
+            <label htmlFor="categoryId" className="form__label">
               Category
             </label>
             <select
               className="form__input form__select"
-              name="category"
-              id="category"
-              value={category}
+              name="categoryId"
+              id="categoryId"
+              value={categoryId}
               onChange={handleInputChange}
             >
               <option value="" disabled>

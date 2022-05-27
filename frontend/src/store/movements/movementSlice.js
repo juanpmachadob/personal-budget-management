@@ -13,6 +13,9 @@ const movementSlice = createSlice({
     getTotals: (state, { payload }) => {
       state.totals = payload;
     },
+    createMovement: (state, { payload }) => {
+      state.movements.push(payload);
+    },
     deleteMovement: (state, { payload }) => {
       state.movements = state.movements.filter(
         (movement) => movement.id !== payload
@@ -21,5 +24,6 @@ const movementSlice = createSlice({
   },
 });
 
-export const { getMovements, getTotals, deleteMovement } = movementSlice.actions;
+export const { getMovements, getTotals, createMovement, deleteMovement } =
+  movementSlice.actions;
 export default movementSlice.reducer;

@@ -3,7 +3,7 @@ import { fetchWithoutToken, fetchWithToken } from "../../helpers/fetch";
 import { checkCredentials, login, logout } from "./authSlice";
 
 export const startLogin = (email, password) => {
-  return async (dispatch) => {
+  return (dispatch) => {
     fetchWithoutToken("auth/login", { email, password }, "POST")
       .then((resp) => resp.json())
       .then((data) => {
@@ -30,7 +30,7 @@ export const startLogin = (email, password) => {
 };
 
 export const startRegister = (name, email, password) => {
-  return async (dispatch) => {
+  return (dispatch) => {
     fetchWithoutToken("auth/register", { name, email, password }, "POST")
       .then((resp) => resp.json())
       .then((data) => {
@@ -57,7 +57,7 @@ export const startRegister = (name, email, password) => {
 };
 
 export const startCheckCredentials = () => {
-  return async (dispatch) => {
+  return (dispatch) => {
     fetchWithToken("auth/renew")
       .then((resp) => resp.json())
       .then((data) => {

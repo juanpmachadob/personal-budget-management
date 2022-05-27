@@ -3,7 +3,7 @@ import { fetchWithoutToken } from "../../helpers/fetch";
 import { getCategories } from "./categorySlice";
 
 export const startGetCategories = () => {
-  return async (dispatch) => {
+  return (dispatch) => {
     fetchWithoutToken("categories")
       .then((resp) => resp.json())
       .then((data) => {

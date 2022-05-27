@@ -1,6 +1,6 @@
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
 import { fetchWithToken } from "../../helpers/fetch";
-import { getMovements, getTotals } from "./movementSlice";
+import { getMovements, getTotals, deleteMovement } from "./movementSlice";
 
 export const startGetMovements = () => {
   return (dispatch) => {
@@ -30,6 +30,26 @@ export const startGetTotals = () => {
         if (data.ok) {
           const { totals } = data;
           dispatch(getTotals(totals));
+        } else {
+          const msg = data.msg ? data.msg : "Please, reload and try again";
+          Swal.fire("Error", msg, "error");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire("Error", "Please, contact the administrator", "error");
+      });
+  };
+};
+
+export const startDeleteMovement = (id) => {
+  return (dispatch) => {
+    fetchWithToken(`movements/${id}`, {}, "DELETE")
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.ok) {
+          dispatch(deleteMovement(id));
+          Swal.fire("Success", "Movement deleted successfully", "success");
         } else {
           const msg = data.msg ? data.msg : "Please, reload and try again";
           Swal.fire("Error", msg, "error");

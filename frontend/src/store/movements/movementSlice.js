@@ -13,8 +13,13 @@ const movementSlice = createSlice({
     getTotals: (state, { payload }) => {
       state.totals = payload;
     },
+    deleteMovement: (state, { payload }) => {
+      state.movements = state.movements.filter(
+        (movement) => movement.id !== payload
+      );
+    },
   },
 });
 
-export const { getMovements, getTotals } = movementSlice.actions;
+export const { getMovements, getTotals, deleteMovement } = movementSlice.actions;
 export default movementSlice.reducer;

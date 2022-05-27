@@ -1,10 +1,24 @@
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2/dist/sweetalert2.all";
+import { startDeleteMovement } from "../../store/movements/movementThunks";
 import BiEditAlt from "../ui/BiEditAlt";
 import BiTrashAlt from "../ui/BiTrashAlt";
 
-const MovementsItem = ({ concept, amount, date, type, category }) => {
+const MovementsItem = ({ id, concept, amount, date, type, category }) => {
+  const dispatch = useDispatch();
   const handleEdit = () => {};
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Delete movement",
+      text: "Do you want to delete the selected movement?",
+      icon: "warning",
+      confirmButtonText: "Yes, delete!",
+      showCancelButton: true,
+    }).then(({ isConfirmed }) => {
+      if (isConfirmed) dispatch(startDeleteMovement(id));
+    });
+  };
 
   return (
     <tr className="table__row">

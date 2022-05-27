@@ -18,7 +18,7 @@ export const startLogin = (email, password) => {
             ? data.msg
             : data.errors
             ? data.errors[Object.keys(data.errors)[0]].msg
-            : "Please, reload and try again.";
+            : "Please, reload and try again";
           Swal.fire("Error", msg, "error");
         }
       })
@@ -45,7 +45,7 @@ export const startRegister = (name, email, password) => {
             ? data.msg
             : data.errors
             ? data.errors[Object.keys(data.errors)[0]].msg
-            : "Please, reload and try again.";
+            : "Please, reload and try again";
           Swal.fire("Error", msg, "error");
         }
       })

@@ -10,11 +10,15 @@ import MovementsRoutes from "./MovementsRoutes";
 const AppRouter = () => {
   const dispatch = useDispatch();
   const { checking, user } = useSelector((state) => state.auth);
-  //TODO: checking screen
-
+  
   useEffect(() => {
     dispatch(startCheckCredentials());
   }, []);
+  
+  //TODO: checking screen
+  if (checking){
+    return <h1>Loading...</h1>
+  }
 
   return (
     <Router>

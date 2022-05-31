@@ -47,7 +47,7 @@ const MovementsScreen = () => {
               </tr>
             </thead>
             <tbody className="table__body">
-              {movements ? (
+              {movements.length > 0 ? (
                 movements.map((movement) => (
                   <MovementsItem key={movement.id} {...movement} />
                 ))
@@ -57,7 +57,7 @@ const MovementsScreen = () => {
             </tbody>
           </table>
         </div>
-        {count && (
+        {!!count && (
           <Paginator
             itemsCount={count}
             itemsPerPage={itemsPerPage}

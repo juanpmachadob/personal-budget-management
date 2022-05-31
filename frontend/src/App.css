@@ -312,6 +312,7 @@ body {
   justify-content: space-evenly;
   margin: 2rem 0;
   overflow: auto;
+  padding-bottom: 1rem;
 }
 
 .movements__header, .movements__totals, .movements__controls {
@@ -485,7 +486,7 @@ body {
   display: flex;
   justify-content: space-evenly;
   list-style: none;
-  margin: 1rem 2rem 2rem 2rem;
+  margin: 1rem 2rem;
   padding: 0;
   user-select: none;
 }

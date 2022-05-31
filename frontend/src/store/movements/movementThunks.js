@@ -179,3 +179,23 @@ export const startGetMovementById = (id) => {
       });
   };
 };
+
+export const startSearchMovements = (term) => {
+  return (dispatch) => {
+    fetchWithToken(`search/movements/${term}`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.ok) {
+          const { results } = data;
+          dispatch(getMovements(results));
+        } else {
+          const msg = data.msg ? data.msg : "Please, reload and try again";
+          Swal.fire("Error", msg, "error");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire("Error", "Please, contact the administrator", "error");
+      });
+  };
+};

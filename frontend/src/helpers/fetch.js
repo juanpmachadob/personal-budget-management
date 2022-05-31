@@ -1,4 +1,4 @@
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = import.meta.env.VITE_BACKEND_URL;
 
 export const fetchWithoutToken = (endpoint, data, method = "GET") => {
   const url = `${baseUrl}/${endpoint}`; // localhost:5000/api/movements

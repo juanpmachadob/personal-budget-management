@@ -3,13 +3,13 @@ import { fetchWithToken } from "../../helpers/fetch";
 import {
   getMovements,
   getTotals,
-  createMovement,
   deleteMovement,
+  setActiveMovement,
 } from "./movementSlice";
 
-export const startGetMovements = () => {
+export const startGetMovements = (page = 1) => {
   return (dispatch) => {
-    fetchWithToken("movements")
+    fetchWithToken(`movements?page=${page}&limit=10`)
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {
@@ -53,8 +53,6 @@ export const startCreateMovement = (movement) => {
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {
-          const { movement: newMovement } = data;
-          dispatch(createMovement(newMovement));
           Swal.fire("Success", "Movement created successfully", "success");
         } else {
           const msg = data.msg
@@ -80,6 +78,49 @@ export const startDeleteMovement = (id) => {
         if (data.ok) {
           dispatch(deleteMovement(id));
           Swal.fire("Success", "Movement deleted successfully", "success");
+        } else {
+          const msg = data.msg ? data.msg : "Please, reload and try again";
+          Swal.fire("Error", msg, "error");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire("Error", "Please, contact the administrator", "error");
+      });
+  };
+};
+
+export const startEditMovement = (id, movement) => {
+  return (dispatch) => {
+    fetchWithToken(`movements/${id}`, movement, "PUT")
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.ok) {
+          Swal.fire("Success", "Movement edited successfully", "success");
+        } else {
+          const msg = data.msg
+            ? data.msg
+            : data.errors
+            ? data.errors[Object.keys(data.errors)[0]].msg
+            : "Please, reload and try again";
+          Swal.fire("Error", msg, "error");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire("Error", "Please, contact the administrator", "error");
+      });
+  };
+};
+
+export const startGetMovementById = (id) => {
+  return (dispatch) => {
+    fetchWithToken(`movements/${id}`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.ok) {
+          const { movement } = data;
+          dispatch(setActiveMovement(movement));
         } else {
           const msg = data.msg ? data.msg : "Please, reload and try again";
           Swal.fire("Error", msg, "error");

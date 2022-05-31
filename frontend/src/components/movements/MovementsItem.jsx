@@ -1,14 +1,15 @@
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2/dist/sweetalert2.all";
+import { setActiveMovement } from "../../store/movements/movementSlice";
 import { startDeleteMovement } from "../../store/movements/movementThunks";
 import BiEditAlt from "../ui/BiEditAlt";
 import BiTrashAlt from "../ui/BiTrashAlt";
 
 const MovementsItem = ({ id, concept, amount, date, type, category }) => {
   const dispatch = useDispatch();
-  const handleEdit = () => {};
 
-  const handleDelete = () => {
+  const handleClickDelete = () => {
     Swal.fire({
       title: "Delete movement",
       text: "Do you want to delete the selected movement?",
@@ -32,13 +33,12 @@ const MovementsItem = ({ id, concept, amount, date, type, category }) => {
       </td>
       <td className="table__cell">{category?.name}</td>
       <td className="table__cell">
-        <BiEditAlt
-          className="table__icon table__icon--blue"
-          onClick={handleEdit}
-        />
+        <Link className="reset" to={`/movements/${id}/edit`}>
+          <BiEditAlt className="table__icon table__icon--blue" />
+        </Link>
         <BiTrashAlt
           className="table__icon table__icon--red"
-          onClick={handleDelete}
+          onClick={handleClickDelete}
         />
       </td>
     </tr>

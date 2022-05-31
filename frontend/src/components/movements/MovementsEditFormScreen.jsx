@@ -1,31 +1,40 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import validator from "validator";
 import useForm from "../../hooks/useForm";
 import { startGetCategories } from "../../store/categories/categoryThunks";
-import { startCreateMovement } from "../../store/movements/movementThunks";
+import {
+  startEditMovement,
+  startGetMovementById,
+} from "../../store/movements/movementThunks";
 import Alert from "../ui/Alert";
 
 const TYPES = ["incomes", "expenses"];
 
-const MovementsFormScreen = () => {
+const MovementsEditFormScreen = () => {
+  const { id } = useParams();
   const [error, setError] = useState();
   const dispatch = useDispatch();
-  const [formValues, handleInputChange] = useForm({
-    concept: "",
-    amount: "",
-    date: "",
-    categoryId: "",
-    type: "",
-  });
+  const { active } = useSelector((state) => state.movement);
+  const [formValues, handleInputChange, reset] = useForm({...active});
+
   const { concept, amount, date, categoryId, type } = formValues;
 
   const { categories } = useSelector((state) => state.category);
 
   useEffect(() => {
+    handleGetMovementById();
     handleGetCategories();
   }, []);
+
+  useEffect(() => {
+    reset({ ...active });
+  }, [active]);
+
+  const handleGetMovementById = () => {
+    dispatch(startGetMovementById(id));
+  };
 
   const handleGetCategories = () => {
     dispatch(startGetCategories());
@@ -34,7 +43,7 @@ const MovementsFormScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      dispatch(startCreateMovement(formValues));
+      dispatch(startEditMovement(id, formValues));
     }
   };
 
@@ -48,7 +57,7 @@ const MovementsFormScreen = () => {
     } else if (concept.trim().length < 2 || concept.trim().length > 32) {
       setError("Concept must be between 2-32 characters");
       return false;
-    } else if (!validator.isNumeric(amount)) {
+    } else if (!validator.isNumeric(amount.toString())) {
       setError("Amount must be a number");
       return false;
     } else if (amount == 0) {
@@ -65,10 +74,24 @@ const MovementsFormScreen = () => {
     return true;
   };
 
+  if (!active.id)
+    return (
+      <div>
+        <div className="card movements-form">
+          <div className="card__body">
+            <Alert type="warning" description="Movement not found" />
+            <Link className="btn btn-dark-gray" to={"/movements"}>
+              Go back
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+
   return (
     <section className="card movements-form">
       <div className="card__body">
-        <h1 className="card__title">New movement</h1>
+        <h1 className="card__title">Edit movement</h1>
         <form className="form" onSubmit={handleSubmit}>
           {error && <Alert description={error} />}
           <div className="form__field">
@@ -162,7 +185,7 @@ const MovementsFormScreen = () => {
               Back
             </Link>
             <button className="btn btn-green" type="submit">
-              Submit
+              Edit
             </button>
           </div>
         </form>
@@ -170,4 +193,4 @@ const MovementsFormScreen = () => {
     </section>
   );
 };
-export default MovementsFormScreen;
+export default MovementsEditFormScreen;

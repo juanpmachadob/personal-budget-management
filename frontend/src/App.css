@@ -39,6 +39,10 @@ body {
 
 /* General UI */
 
+.reset {
+  all: unset;
+}
+
 .alert {
   background-color: #fff0f0;
   border: 1px solid var(--color-red);
@@ -417,9 +421,10 @@ body {
 
 .table__cell {
   padding: 1rem 2rem;
+  white-space: nowrap;
 }
 
-.table__card{
+.table__card {
   border: 1px solid;
   padding: .25rem .5rem;
   font-size: 0.8rem;

@@ -6,7 +6,7 @@ const getMovementsByCurrentUser = async (req, res) => {
 
   try {
     // Paginate user movements
-    const movements = await Movement.findAll({
+    const movements = await Movement.findAndCountAll({
       where: { userId },
       offset: (page - 1) * Number(limit),
       limit: Number(limit),
@@ -34,7 +34,7 @@ const getMovementsByType = (type) => {
 
     try {
       // Paginate user movements
-      const movements = await Movement.findAll({
+      const movements = await Movement.findAndCountAll({
         where: { userId, type },
         offset: (page - 1) * Number(limit),
         limit: Number(limit),

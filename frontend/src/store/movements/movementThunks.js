@@ -9,12 +9,22 @@ import {
 
 export const startGetMovements = (page = 1, limit = 10) => {
   return (dispatch) => {
+    Swal.fire({
+      title: "Getting movements",
+      text: "Please, wait...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     fetchWithToken(`movements?page=${page}&limit=${limit}`)
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {
           const { movements } = data;
           dispatch(getMovements(movements));
+          Swal.close();
         } else {
           const msg = data.msg ? data.msg : "Please, reload and try again";
           Swal.fire("Error", msg, "error");
@@ -49,6 +59,15 @@ export const startGetTotals = () => {
 
 export const startCreateMovement = (movement) => {
   return (dispatch) => {
+    Swal.fire({
+      title: "Creating movement",
+      text: "Please, wait...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     fetchWithToken("movements", movement, "POST")
       .then((resp) => resp.json())
       .then((data) => {
@@ -72,6 +91,15 @@ export const startCreateMovement = (movement) => {
 
 export const startDeleteMovement = (id) => {
   return (dispatch) => {
+    Swal.fire({
+      title: "Deleting movement",
+      text: "Please, wait...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     fetchWithToken(`movements/${id}`, {}, "DELETE")
       .then((resp) => resp.json())
       .then((data) => {
@@ -92,6 +120,15 @@ export const startDeleteMovement = (id) => {
 
 export const startEditMovement = (id, movement) => {
   return (dispatch) => {
+    Swal.fire({
+      title: "Editing movement",
+      text: "Please, wait...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     fetchWithToken(`movements/${id}`, movement, "PUT")
       .then((resp) => resp.json())
       .then((data) => {
@@ -115,12 +152,22 @@ export const startEditMovement = (id, movement) => {
 
 export const startGetMovementById = (id) => {
   return (dispatch) => {
+    Swal.fire({
+      title: "Getting movement",
+      text: "Please, wait...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     fetchWithToken(`movements/${id}`)
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {
           const { movement } = data;
           dispatch(setActiveMovement(movement));
+          Swal.close();
         } else {
           const msg = data.msg ? data.msg : "Please, reload and try again";
           Swal.fire("Error", msg, "error");

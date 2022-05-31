@@ -7,7 +7,7 @@ const searchMovements = async (term = "", req, res) => {
   const { id: userId } = req;
   try {
     // Searching for the term
-    const movements = await Movement.findAll({
+    const movements = await Movement.findAndCountAll({
       where: {
         userId,
         [Op.or]: [

@@ -15,7 +15,6 @@ const AppRouter = () => {
     dispatch(startCheckCredentials());
   }, []);
   
-  //TODO: checking screen
   if (checking){
     return <h1>Loading...</h1>
   }

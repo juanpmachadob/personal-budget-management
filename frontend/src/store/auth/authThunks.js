@@ -4,6 +4,14 @@ import { checkCredentials, login, logout } from "./authSlice";
 
 export const startLogin = (email, password) => {
   return (dispatch) => {
+    Swal.fire({
+      title: "Logging in",
+      text: "Please, wait...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     fetchWithoutToken("auth/login", { email, password }, "POST")
       .then((resp) => resp.json())
       .then((data) => {
@@ -13,6 +21,7 @@ export const startLogin = (email, password) => {
           localStorage.setItem("token", token);
 
           dispatch(login(user));
+          Swal.close();
         } else {
           const msg = data.msg
             ? data.msg
@@ -31,6 +40,14 @@ export const startLogin = (email, password) => {
 
 export const startRegister = (name, email, password) => {
   return (dispatch) => {
+    Swal.fire({
+      title: "Registering",
+      text: "Please, wait...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     fetchWithoutToken("auth/register", { name, email, password }, "POST")
       .then((resp) => resp.json())
       .then((data) => {
@@ -40,6 +57,7 @@ export const startRegister = (name, email, password) => {
           localStorage.setItem("token", token);
 
           dispatch(login(user));
+          Swal.close();
         } else {
           const msg = data.msg
             ? data.msg
@@ -81,7 +99,16 @@ export const startCheckCredentials = () => {
 
 export const startLogout = () => {
   return (dispatch) => {
+    Swal.fire({
+      title: "Logging out",
+      text: "Please, wait...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     localStorage.clear();
     dispatch(logout());
+    Swal.close();
   };
 };

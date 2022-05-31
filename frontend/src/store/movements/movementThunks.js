@@ -7,9 +7,9 @@ import {
   setActiveMovement,
 } from "./movementSlice";
 
-export const startGetMovements = (page = 1) => {
+export const startGetMovements = (page = 1, limit = 10) => {
   return (dispatch) => {
-    fetchWithToken(`movements?page=${page}&limit=10`)
+    fetchWithToken(`movements?page=${page}&limit=${limit}`)
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {

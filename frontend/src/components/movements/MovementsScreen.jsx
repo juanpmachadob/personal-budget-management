@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { startGetMovements } from "../../store/movements/movementThunks";
@@ -6,15 +6,22 @@ import MovementsControls from "./MovementsControls";
 import MovementsItem from "./MovementsItem";
 import MovementsItemEmpty from "./MovementsItemEmpty";
 import MovementsTotals from "./MovementsTotals";
+import Paginator from "./Paginator";
 
+const itemsPerPage = 10;
 const MovementsScreen = () => {
   const dispatch = useDispatch();
 
-  const { movements } = useSelector((state) => state.movement);
+  const { count, movements } = useSelector((state) => state.movement);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    dispatch(startGetMovements());
-  }, []);
+    dispatch(startGetMovements(currentPage, itemsPerPage));
+  }, [currentPage]);
+
+  const changePage = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -50,6 +57,13 @@ const MovementsScreen = () => {
             </tbody>
           </table>
         </div>
+        {count && (
+          <Paginator
+            itemsCount={count}
+            itemsPerPage={itemsPerPage}
+            callbackOnPageChange={changePage}
+          />
+        )}
       </div>
     </>
   );

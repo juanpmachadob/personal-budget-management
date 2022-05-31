@@ -382,7 +382,7 @@ body {
 
 .movements__body {
   overflow: auto;
-  padding: 0 2rem 2rem 2rem;
+  padding: 0 2rem;
 }
 
 /* Movements form */
@@ -442,8 +442,6 @@ body {
   color: var(--color-red);
 }
 
-
-
 .table__icon {
   cursor: pointer;
   margin: 0 .25rem;
@@ -480,6 +478,47 @@ body {
   color: var(--color-red);
 }
 
+/* Paginator */
+
+.paginator {
+  background-color: var(--color-light-gray);
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+  margin: 1rem 2rem 2rem 2rem;
+  padding: 0;
+  user-select: none;
+}
+
+.paginator__page-item {
+  padding: 1rem 0;
+}
+
+.paginator__page-link {
+  padding: .5rem;
+}
+
+.paginator__page-link:hover {
+  color: var(--color-blue);
+  cursor: pointer;
+}
+
+
+.paginator__page-item--active {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+.paginator__page-link--active:hover {
+  color: var(--color-white);
+  cursor: default;
+}
+
+.paginator__page-link--break {
+  color: var(--color-gray);
+}
+
+
 @media (min-width: 480px) {
 
   /* General UI */
@@ -509,6 +548,11 @@ body {
 
   .movements__title, .movements__controls .form__input:first-child, .movements__total-card {
     margin-bottom: 0rem;
+  }
+
+  /* Paginator */
+  .paginator__page-link {
+    padding: 1rem;
   }
 }
 

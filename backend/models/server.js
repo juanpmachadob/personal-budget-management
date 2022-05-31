@@ -14,6 +14,7 @@ class Server {
       movements: "/api/movements",
       categories: "/api/categories",
       search: "/api/search",
+      public: "../public/index.html",
     };
 
     this.connectDB();
@@ -30,8 +31,12 @@ class Server {
   }
 
   middlewares() {
-    //TODO: configure cors
-    this.app.use(cors());
+    this.app.use(
+      cors({
+        origin: process.env.FRONTEND_URL,
+        optionsSuccessStatus: 200,
+      })
+    );
 
     this.app.use(express.json());
 
@@ -44,7 +49,7 @@ class Server {
     this.app.use(this.paths.categories, require("../routes/categoryRoutes"));
     this.app.use(this.paths.search, require("../routes/searchRoutes"));
     this.app.get("/*", (req, res) => {
-      res.sendFile(path.join(__dirname + "/public/index.html"));
+      res.sendFile(path.join(__dirname, this.paths.public));
     });
   }
 

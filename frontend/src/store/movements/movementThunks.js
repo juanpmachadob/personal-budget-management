@@ -7,9 +7,21 @@ import {
   setActiveMovement,
 } from "./movementSlice";
 
-export const startGetMovements = (page = 1, limit = 10) => {
+export const startGetMovements = (filter = "all", page = 1, limit = 10) => {
+  let route = "";
+  switch (filter) {
+    case "incomes":
+      route = "movements/incomes";
+      break;
+    case "expenses":
+      route = "movements/expenses";
+      break;
+    default:
+      route = "movements";
+  }
+
   return (dispatch) => {
-    fetchWithToken(`movements?page=${page}&limit=${limit}`)
+    fetchWithToken(`${route}?page=${page}&limit=${limit}`)
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {
@@ -48,16 +60,16 @@ export const startGetTotals = () => {
 };
 
 export const startCreateMovement = (movement) => {
-  return (dispatch) => {
-    Swal.fire({
-      title: "Creating movement",
-      text: "Please, wait...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+  Swal.fire({
+    title: "Creating movement",
+    text: "Please, wait...",
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
 
+  return (dispatch) => {
     fetchWithToken("movements", movement, "POST")
       .then((resp) => resp.json())
       .then((data) => {
@@ -80,16 +92,16 @@ export const startCreateMovement = (movement) => {
 };
 
 export const startDeleteMovement = (id) => {
-  return (dispatch) => {
-    Swal.fire({
-      title: "Deleting movement",
-      text: "Please, wait...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+  Swal.fire({
+    title: "Deleting movement",
+    text: "Please, wait...",
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
 
+  return (dispatch) => {
     fetchWithToken(`movements/${id}`, {}, "DELETE")
       .then((resp) => resp.json())
       .then((data) => {
@@ -109,16 +121,16 @@ export const startDeleteMovement = (id) => {
 };
 
 export const startEditMovement = (id, movement) => {
-  return (dispatch) => {
-    Swal.fire({
-      title: "Editing movement",
-      text: "Please, wait...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+  Swal.fire({
+    title: "Editing movement",
+    text: "Please, wait...",
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
 
+  return (dispatch) => {
     fetchWithToken(`movements/${id}`, movement, "PUT")
       .then((resp) => resp.json())
       .then((data) => {
@@ -141,16 +153,16 @@ export const startEditMovement = (id, movement) => {
 };
 
 export const startGetMovementById = (id) => {
-  return (dispatch) => {
-    Swal.fire({
-      title: "Getting movement",
-      text: "Please, wait...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+  Swal.fire({
+    title: "Getting movement",
+    text: "Please, wait...",
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
 
+  return (dispatch) => {
     fetchWithToken(`movements/${id}`)
       .then((resp) => resp.json())
       .then((data) => {

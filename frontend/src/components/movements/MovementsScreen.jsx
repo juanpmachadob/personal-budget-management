@@ -16,6 +16,7 @@ const MovementsScreen = () => {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const { count, movements } = useSelector((state) => state.movement);
+  const [filter, setFilter] = useState("all")
 
   useEffect(() => {
     const currentPage = searchParams.get("page") || 1;
@@ -24,9 +25,9 @@ const MovementsScreen = () => {
     if (searchTerm) {
       dispatch(startSearchMovements(searchTerm, currentPage, itemsPerPage));
     } else {
-      dispatch(startGetMovements(currentPage, itemsPerPage));
+      dispatch(startGetMovements(filter, currentPage, itemsPerPage));
     }
-  }, [searchParams]);
+  }, [searchParams, filter]);
 
   return (
     <>
@@ -38,7 +39,7 @@ const MovementsScreen = () => {
           </Link>
         </div>
         <MovementsTotals />
-        <MovementsControls />
+        <MovementsControls filter={filter} setFilter={setFilter}/>
         <div className="movements__body">
           <table className="table">
             <thead className="table__head">

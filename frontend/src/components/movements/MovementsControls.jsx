@@ -3,10 +3,10 @@ import useForm from "../../hooks/useForm";
 
 let timeoutSearch = null;
 
-const MovementsControls = () => {
+const MovementsControls = ({ filter, setFilter }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [formValues, handleInputChange] = useForm({
+  const [formValues, handleInputChange, reset] = useForm({
     searchTerm: "",
   });
   const { searchTerm } = formValues;
@@ -25,6 +25,14 @@ const MovementsControls = () => {
     }
   };
 
+  const handleFilterChange = ({ target }) => {
+    setFilter(target.value);
+
+    reset({ searchTerm: "" });
+    searchParams.delete("search");
+    setSearchParams(searchParams);
+  };
+
   return (
     <div className="movements__controls">
       <input
@@ -39,16 +47,15 @@ const MovementsControls = () => {
       />
       <select
         className="form__input form__input--inline form__select"
-        name="sort"
-        id="sort"
-        defaultValue="default"
+        name="filter"
+        id="filter"
+        value={filter}
+        onChange={handleFilterChange}
       >
-        <option value="default" disabled>
-          Filter by
-        </option>
-        <option value="category">Category</option>
-        <option value="amount">Amount</option>
-        <option value="date">Date</option>
+        <option disabled>Filter by...</option>
+        <option value="all">All</option>
+        <option value="incomes">Incomes</option>
+        <option value="expenses">Expenses</option>
       </select>
     </div>
   );

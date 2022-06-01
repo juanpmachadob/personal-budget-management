@@ -5,12 +5,18 @@ import { useSearchParams } from "react-router-dom";
 const Paginator = ({ itemsCount = 0, itemsPerPage = 10 }) => {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     setPageCount(Math.ceil(itemsCount / itemsPerPage));
   }, [itemsCount, itemsPerPage, itemOffset]);
+
+  useEffect(() => {
+    const page = searchParams.get("page") || 1;
+    if (page <= pageCount) setCurrentPage(page);
+  }, [searchParams, pageCount]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % itemsCount;
@@ -24,6 +30,7 @@ const Paginator = ({ itemsCount = 0, itemsPerPage = 10 }) => {
     <>
       <ReactPaginate
         breakLabel="..."
+        forcePage={currentPage - 1}
         nextLabel=">"
         onPageChange={handlePageClick}
         marginPagesDisplayed={1}

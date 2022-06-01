@@ -29,8 +29,7 @@ const MovementsControls = ({ filter, setFilter }) => {
     setFilter(target.value);
 
     reset({ searchTerm: "" });
-    searchParams.delete("search");
-    setSearchParams(searchParams);
+    setSearchParams({page: 1});
   };
 
   return (

@@ -3,7 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const movementSlice = createSlice({
   name: "movement",
   initialState: {
-    totals: {},
+    totals: {
+      general: 0,
+      incomes: 0,
+      expenses: 0,
+    },
     count: 0,
     movements: [],
     active: {
@@ -23,9 +27,19 @@ const movementSlice = createSlice({
       state.totals = payload;
     },
     deleteMovement: (state, { payload }) => {
-      state.movements = state.movements.filter(
-        (movement) => movement.id !== payload
-      );
+      state.movements = state.movements.filter((movement) => {
+        if (movement.id === payload){
+          if (movement.type === "incomes"){
+            state.totals.incomes -= movement.amount;
+            state.totals.general -= movement.amount;
+          }
+          if (movement.type === "expenses") {
+            state.totals.expenses -= movement.amount;
+            state.totals.general += movement.amount;
+          }
+        }
+        return movement.id !== payload;
+      });
       state.count--;
     },
     setActiveMovement: (state, { payload }) => {

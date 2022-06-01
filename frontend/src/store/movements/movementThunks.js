@@ -9,22 +9,12 @@ import {
 
 export const startGetMovements = (page = 1, limit = 10) => {
   return (dispatch) => {
-    Swal.fire({
-      title: "Getting movements",
-      text: "Please, wait...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-
     fetchWithToken(`movements?page=${page}&limit=${limit}`)
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {
           const { movements } = data;
           dispatch(getMovements(movements));
-          Swal.close();
         } else {
           const msg = data.msg ? data.msg : "Please, reload and try again";
           Swal.fire("Error", msg, "error");
@@ -180,9 +170,9 @@ export const startGetMovementById = (id) => {
   };
 };
 
-export const startSearchMovements = (term) => {
+export const startSearchMovements = (term = "", page = 1, limit = 10) => {
   return (dispatch) => {
-    fetchWithToken(`search/movements/${term}`)
+    fetchWithToken(`search/movements/${term}?page=${page}&limit=${limit}`)
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {

@@ -1,27 +1,32 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { startGetMovements } from "../../store/movements/movementThunks";
+import { Link, useSearchParams } from "react-router-dom";
+import {
+  startGetMovements,
+  startSearchMovements,
+} from "../../store/movements/movementThunks";
 import MovementsControls from "./MovementsControls";
 import MovementsItem from "./MovementsItem";
 import MovementsItemEmpty from "./MovementsItemEmpty";
 import MovementsTotals from "./MovementsTotals";
 import Paginator from "./Paginator";
 
-const itemsPerPage = 10;
+const itemsPerPage = 1;
 const MovementsScreen = () => {
   const dispatch = useDispatch();
-
+  const [searchParams] = useSearchParams();
   const { count, movements } = useSelector((state) => state.movement);
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    dispatch(startGetMovements(currentPage, itemsPerPage));
-  }, [currentPage]);
+    const currentPage = searchParams.get("page") || 1;
+    const searchTerm = searchParams.get("search") || "";
 
-  const changePage = (page) => {
-    setCurrentPage(page);
-  };
+    if (searchTerm) {
+      dispatch(startSearchMovements(searchTerm, currentPage, itemsPerPage));
+    } else {
+      dispatch(startGetMovements(currentPage, itemsPerPage));
+    }
+  }, [searchParams]);
 
   return (
     <>
@@ -58,11 +63,7 @@ const MovementsScreen = () => {
           </table>
         </div>
         {!!count && (
-          <Paginator
-            itemsCount={count}
-            itemsPerPage={itemsPerPage}
-            callbackOnPageChange={changePage}
-          />
+          <Paginator itemsCount={count} itemsPerPage={itemsPerPage} />
         )}
       </div>
     </>

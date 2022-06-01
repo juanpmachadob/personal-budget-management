@@ -1,11 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import useForm from "../../hooks/useForm";
-import { startGetMovements, startSearchMovements } from "../../store/movements/movementThunks";
 
 let timeoutSearch = null;
 
 const MovementsControls = () => {
-  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [formValues, handleInputChange] = useForm({
     searchTerm: "",
@@ -16,12 +15,13 @@ const MovementsControls = () => {
     clearTimeout(timeoutSearch);
     timeoutSearch = setTimeout(handleSearch, 500);
   };
-  //TODO: Search paginator
+
   const handleSearch = () => {
-    if (searchTerm.trim().length === 0) {
-      dispatch(startGetMovements());
+    if (searchTerm.trim().length > 0) {
+      setSearchParams({ search: searchTerm });
     } else {
-      dispatch(startSearchMovements(searchTerm));
+      searchParams.delete("search");
+      setSearchParams(searchParams);
     }
   };
 

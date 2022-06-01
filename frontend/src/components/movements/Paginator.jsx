@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import { useSearchParams } from "react-router-dom";
 
-const Paginator = ({
-  itemsCount = 0,
-  itemsPerPage = 10,
-  callbackOnPageChange,
-}) => {
+const Paginator = ({ itemsCount = 0, itemsPerPage = 10 }) => {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
     setPageCount(Math.ceil(itemsCount / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
+  }, [itemsCount, itemsPerPage, itemOffset]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % itemsCount;
     setItemOffset(newOffset);
-    callbackOnPageChange(newOffset + 1);
+
+    searchParams.set("page", event.selected + 1);
+    setSearchParams(searchParams);
   };
 
   return (

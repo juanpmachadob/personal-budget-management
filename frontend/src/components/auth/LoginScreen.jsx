@@ -10,8 +10,8 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState();
   const [formValues, handleInputChange] = useForm({
-    email: "juan@test.com",
-    password: "Aabc123.Aabc123.Aabc123.Aabc123.",
+    email: "",
+    password: "",
   });
   const { email, password } = formValues;
 

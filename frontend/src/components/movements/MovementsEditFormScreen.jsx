@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import validator from "validator";
 import useForm from "../../hooks/useForm";
 import { startGetCategories } from "../../store/categories/categoryThunks";
@@ -11,6 +11,7 @@ import {
 import Alert from "../ui/Alert";
 
 const MovementsEditFormScreen = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [error, setError] = useState();
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const MovementsEditFormScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      dispatch(startEditMovement(id, formValues));
+      dispatch(startEditMovement(id, formValues, navigate));
     }
   };
 

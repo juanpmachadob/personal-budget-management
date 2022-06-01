@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import validator from "validator";
 import useForm from "../../hooks/useForm";
 import { startGetCategories } from "../../store/categories/categoryThunks";
@@ -10,6 +10,7 @@ import Alert from "../ui/Alert";
 const TYPES = ["incomes", "expenses"];
 
 const MovementsCreateFormScreen = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState();
   const dispatch = useDispatch();
   const [formValues, handleInputChange] = useForm({
@@ -34,7 +35,7 @@ const MovementsCreateFormScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      dispatch(startCreateMovement(formValues));
+      dispatch(startCreateMovement(formValues, navigate));
     }
   };
 

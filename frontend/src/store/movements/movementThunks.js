@@ -59,7 +59,7 @@ export const startGetTotals = () => {
   };
 };
 
-export const startCreateMovement = (movement) => {
+export const startCreateMovement = (movement, navigate) => {
   Swal.fire({
     title: "Creating movement",
     text: "Please, wait...",
@@ -69,12 +69,13 @@ export const startCreateMovement = (movement) => {
     },
   });
 
-  return (dispatch) => {
+  return () => {
     fetchWithToken("movements", movement, "POST")
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {
           Swal.fire("Success", "Movement created successfully", "success");
+          navigate("/movements");
         } else {
           const msg = data.msg
             ? data.msg
@@ -120,7 +121,7 @@ export const startDeleteMovement = (id) => {
   };
 };
 
-export const startEditMovement = (id, movement) => {
+export const startEditMovement = (id, movement, navigate) => {
   Swal.fire({
     title: "Editing movement",
     text: "Please, wait...",
@@ -130,12 +131,13 @@ export const startEditMovement = (id, movement) => {
     },
   });
 
-  return (dispatch) => {
+  return () => {
     fetchWithToken(`movements/${id}`, movement, "PUT")
       .then((resp) => resp.json())
       .then((data) => {
         if (data.ok) {
           Swal.fire("Success", "Movement edited successfully", "success");
+          navigate("/movements");
         } else {
           const msg = data.msg
             ? data.msg

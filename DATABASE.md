@@ -1,5 +1,11 @@
 # Database setup
 
+Database model:
+
+<img src="./db-model.jpg">
+
+---
+
 Create and use **database**:
 ```bash
 CREATE DATABASE `personal_budget`;

@@ -14,7 +14,13 @@ const Paginator = ({ itemsCount = 0, itemsPerPage = 10 }) => {
   }, [itemsCount, itemsPerPage, itemOffset]);
 
   useEffect(() => {
-    const page = searchParams.get("page") || 1;
+    let page = searchParams.get("page") || 1;
+
+    if (currentPage <= 0 || isNaN(currentPage)) {
+      page = 1;
+      setSearchParams({ page: 1 });
+    }
+
     if (page <= pageCount) setCurrentPage(page);
   }, [searchParams, pageCount]);
 

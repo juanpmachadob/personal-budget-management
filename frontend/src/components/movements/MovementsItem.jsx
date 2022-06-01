@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2/dist/sweetalert2.all";
-import { setActiveMovement } from "../../store/movements/movementSlice";
 import { startDeleteMovement } from "../../store/movements/movementThunks";
 import BiEditAlt from "../ui/BiEditAlt";
 import BiTrashAlt from "../ui/BiTrashAlt";

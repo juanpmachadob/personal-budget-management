@@ -19,8 +19,10 @@ const MovementsScreen = () => {
   const [filter, setFilter] = useState("all")
 
   useEffect(() => {
-    const currentPage = searchParams.get("page") || 1;
+    let currentPage = searchParams.get("page") || 1;
     const searchTerm = searchParams.get("search") || "";
+
+    if (currentPage <= 0 || isNaN(currentPage)) currentPage = 1;
 
     if (searchTerm) {
       dispatch(startSearchMovements(searchTerm, currentPage, itemsPerPage));

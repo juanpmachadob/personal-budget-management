@@ -15,6 +15,7 @@ Originally, this is a challenge:
     - [Table of contents 📃](#table-of-contents-)
   - [Starting 🚀](#starting-)
     - [Pre-requirements 📋](#pre-requirements-)
+    - [Database setup 📂](#database-setup-)
     - [Installation 🔧](#installation-)
   - [Deployment 📦](#deployment-)
   - [Built with 🛠️](#built-with-️)
@@ -26,6 +27,12 @@ Originally, this is a challenge:
 * [Git](https://git-scm.com/)
 * [npm](https://www.npmjs.com/)
 * [MySQL DB](https://www.mysql.com/)
+
+### Database setup 📂
+
+* Setup: <a href="./DATABASE.md" target="_blank">Open DATABASE.md</a>
+  
+<img src="./db-model.jpg">
 
 ### Installation 🔧
 

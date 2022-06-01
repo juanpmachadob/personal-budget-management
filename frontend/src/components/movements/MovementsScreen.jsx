@@ -11,7 +11,7 @@ import MovementsItemEmpty from "./MovementsItemEmpty";
 import MovementsTotals from "./MovementsTotals";
 import Paginator from "./Paginator";
 
-const itemsPerPage = 1;
+const itemsPerPage = 10;
 const MovementsScreen = () => {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();

@@ -10,16 +10,14 @@ import {
 } from "../../store/movements/movementThunks";
 import Alert from "../ui/Alert";
 
-const TYPES = ["incomes", "expenses"];
-
 const MovementsEditFormScreen = () => {
   const { id } = useParams();
   const [error, setError] = useState();
   const dispatch = useDispatch();
   const { active } = useSelector((state) => state.movement);
-  const [formValues, handleInputChange, reset] = useForm({...active});
+  const [formValues, handleInputChange, reset] = useForm({ ...active });
 
-  const { concept, amount, date, categoryId, type } = formValues;
+  const { concept, amount, date, categoryId } = formValues;
 
   const { categories } = useSelector((state) => state.category);
 
@@ -48,10 +46,7 @@ const MovementsEditFormScreen = () => {
   };
 
   const isFormValid = () => {
-    if (!validator.isIn(type, TYPES)) {
-      setError("Invalid movement type");
-      return false;
-    } else if (concept.trim().length === 0) {
+    if (concept.trim().length === 0) {
       setError("Concept is required");
       return false;
     } else if (concept.trim().length < 2 || concept.trim().length > 32) {
@@ -94,29 +89,6 @@ const MovementsEditFormScreen = () => {
         <h1 className="card__title">Edit movement</h1>
         <form className="form" onSubmit={handleSubmit}>
           {error && <Alert description={error} />}
-          <div className="form__field">
-            <label htmlFor="type" className="form__label">
-              Movement type
-            </label>
-            <select
-              className="form__input form__select"
-              name="type"
-              id="type"
-              value={type}
-              onChange={handleInputChange}
-            >
-              <option value="" disabled>
-                Select movement type
-              </option>
-              {TYPES.map((t, index) => {
-                return (
-                  <option key={index} value={t}>
-                    {t}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
           <div className="form__field">
             <label htmlFor="concept" className="form__label">
               Concept
